@@ -35,17 +35,10 @@ public class SayroListener implements Listener
 	{
 		Player p = e.getPlayer();
 		if (!p.isOp())
-		{
-		e.setJoinMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + "+" + ChatColor.WHITE + "] " + ChatColor.YELLOW + e.getPlayer().getName());
-		}
+			e.setJoinMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + "+" + ChatColor.WHITE + "] " + ChatColor.YELLOW + e.getPlayer().getName());
 		if (p.isOp())
-		{
 			if(e.getJoinMessage().contains("joined"))
-			{	
 				e.setJoinMessage(ChatColor.YELLOW + "L'administrateur " + ChatColor.GREEN + e.getPlayer().getName() + ChatColor.YELLOW + " s'est connecté sur FightNations.");
-			}
-		}
-			
 		}
 	
 	public void setupScoreboard(Player p)
@@ -68,17 +61,10 @@ public class SayroListener implements Listener
 	{
 		Player p = e.getPlayer();
 		if (!p.isOp())
-		{
-		e.setQuitMessage(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "-" + ChatColor.WHITE + "] " + ChatColor.YELLOW + e.getPlayer().getName());
-		}
+			e.setQuitMessage(ChatColor.WHITE + "[" + ChatColor.DARK_RED + "-" + ChatColor.WHITE + "] " + ChatColor.YELLOW + e.getPlayer().getName());
 		if (p.isOp())
-		{
 			if(e.getQuitMessage().contains("joined"))
-			{
-				
 				e.setQuitMessage(ChatColor.YELLOW + "L'administrateur " + ChatColor.DARK_RED + e.getPlayer().getName() + ChatColor.YELLOW + " s'est déconnecté de FightNations.");
-			}
-		}	
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -92,87 +78,114 @@ public class SayroListener implements Listener
 		{
 			Entity damager = ((EntityDamageByEntityEvent)damageEvent).getDamager();
 			//----------------------NORMAL KILL-------------------------
-			if (deathMessage.contains("killed") || deathMessage.contains("slain") || deathMessage.contains("got finished")) {
-				if (damager instanceof Player) {
+			if (deathMessage.contains("killed") || deathMessage.contains("slain") || deathMessage.contains("got finished"))
+			{
+				if (damager instanceof Player)
+				{
 					String itemname = ((Player)damager).getItemInHand().getItemMeta().getDisplayName();
-						if (itemname==null) {
+						if (itemname==null)
+						{
 							d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " a été décapité par " + ChatColor.RED + ((Player)damager).getName());
 							return;
-						} else {
+						} 
+						else 
+						{
 							d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " a été terassé par " + ChatColor.RED +((Player)damager).getName() + ChatColor.YELLOW + " en utilisant " + ChatColor.WHITE + ChatColor.AQUA + itemname);
 							return;
 						}
 					}
-				if (damager instanceof LivingEntity) {
+				if (damager instanceof LivingEntity)
+				{
 					d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " est mort par " + ChatColor.RED + ((LivingEntity) damager).getName());
 					return;
-					}
 				}
+			}
 			//----------------------EXPLOSION-------------------------
-			if (deathMessage.contains("blown up")) {
-				if (damager instanceof Player) {
+			if (deathMessage.contains("blown up"))
+			{
+				if (damager instanceof Player)
+				{
 					d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " a été explosé par " + ChatColor.RED + ((Player)damager).getName());
 					return;
-					}
-				if (damager instanceof LivingEntity) {
+				}
+				if (damager instanceof LivingEntity)
+				{
 					d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " a explosé avec " + ChatColor.RED + ((LivingEntity) damager).getName());
 					return;
-					}
 				}
+			}
 			//----------------------WITHER/ENDER PEARL/SNOWBALL-------------------------
-			if (deathMessage.contains("pummeled") || deathMessage.contains("withered")) {
-				if (damager instanceof Player) {
+			if (deathMessage.contains("pummeled") || deathMessage.contains("withered"))
+			{
+				if (damager instanceof Player)
+				{
 					d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " a été victimisé par " + ChatColor.RED + ((Player)damager).getName());
 					return;
-					}
-				if (damager instanceof LivingEntity) {
+				}
+				if (damager instanceof LivingEntity)
+				{
 					d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " est mort par  " + ChatColor.RED + ((LivingEntity) damager).getName());
 					return;
-					}
 				}
+			}
 			//-----------------------ARROW---------------------------
-			if (deathMessage.contains("shot") || deathMessage.contains("shooted")) {
-				if (damager instanceof Projectile) {
+			if (deathMessage.contains("shot") || deathMessage.contains("shooted"))
+			{
+				if (damager instanceof Projectile)
+				{
 					ProjectileSource shooter = ((Projectile)damager).getShooter();
-					if (shooter instanceof Player) {
+					if (shooter instanceof Player)
+					{
 						String itemname = ((Player)shooter).getItemInHand().getItemMeta().getDisplayName();
-						if (itemname==null) {
+						if (itemname==null)
+						{
 							d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait tiré dessus par " + ChatColor.RED + ((Player)shooter).getName());
 							return;
-						} else {
+						}
+						else
+						{
 							d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait tiré dessus par " + ChatColor.RED + ((Player)shooter).getName() + ChatColor.YELLOW +  " utilisant " + ChatColor.WHITE + itemname);
 							return;
 						}
 					}
-					if (shooter instanceof LivingEntity) {
+					if (shooter instanceof LivingEntity) 
+					{
 						d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait tiré dessus par " + ChatColor.RED + ((LivingEntity) shooter).getName());
 						return;
 					}
 				}
 			}
 			////-----------------------SPECIAL SNOWBALL LANCEE PAR UNE ENTITE---------------------------
-			if (deathMessage.contains("pummeled")) {
-				if (damager instanceof Projectile) {
+			if (deathMessage.contains("pummeled"))
+			{
+				if (damager instanceof Projectile)
+				{
 					LivingEntity shooter = (LivingEntity) ((Projectile)damager).getShooter();
-					if (shooter instanceof Player) {
+					if (shooter instanceof Player)
+					{
 						d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait atomisé par une boule de neige de  " + ChatColor.RED + ((Player)shooter).getName());
 						return;
-						}
-					if (shooter instanceof LivingEntity) {
+					}
+					if (shooter instanceof LivingEntity)
+					{
 						d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait atomisé par une boule de neige de " + ChatColor.RED + ((LivingEntity) shooter).getName());
 						return;
 					}
 				}
 			}
 			//-----------------------FIREBALL---------------------------
-			if (deathMessage.contains("fireballed")) {
-				if (damager instanceof Projectile) {
+			if (deathMessage.contains("fireballed"))
+			{
+				if (damager instanceof Projectile)
+				{
 					LivingEntity shooter = (LivingEntity) ((Projectile)damager).getShooter();
-					if (shooter instanceof Player) {
+					if (shooter instanceof Player)
+					{
 						d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait atomisé par une boule de feu de  " + ChatColor.RED + ((Player)shooter).getName());
 						return;
-						}
-					if (shooter instanceof LivingEntity) {
+					}
+					if (shooter instanceof LivingEntity)
+					{
 						d.setDeathMessage(ChatColor.GREEN + victim + ChatColor.YELLOW + " s'est fait atomisé par une boule de feu de " + ChatColor.RED + ((LivingEntity) shooter).getName());
 						return;
 					}
@@ -182,120 +195,149 @@ public class SayroListener implements Listener
 		if (d.getDeathMessage().contains("from"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " s'est cassé la margoulette ... ");
-			return;}
+			return;
+		}
 		if (d.getDeathMessage().contains("place"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " s'est cassé la margoulette ... ");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("pricked"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu faire un calin a un cactus...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("hit"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu apprendre a voler...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("too"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu apprendre a voler...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("hard"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu apprendre a voler...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("drowned"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " vient de boire la tasse...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("starved"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " n'a pas trouvé a mangé...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("lightning"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " s'est fait griller par l'orage...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("lava"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a rendu visite a Satan !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("suffocated"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu respirer dans un mur ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("blew up"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " est monté au 7 ème ciel !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("anvil"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a été applati par une enclume !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("magic"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a été tué par le tout puissant magicien !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("squashed"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a été écrasé par une enclume !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("burned"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a cramé à petit feu ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("went up"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a cramé à petit feu ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("crisp"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a cramé à petit feu ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("flames"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a cramé à petit feu ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("fire"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a cramé à petit feu ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("fireballed"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a été atomisé par une énorme boule de feu !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("pummeled"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a été atomisé par une petite boule de neige !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("withered"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a été atomisé par un WITHER !");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("world"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a quitté notre beau monde ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("Killed"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a mis fin à sa vie misérable ...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("CustomGuardian"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu faire un bisous à un guardien...");
-			return;}
+			return;
+		}
 		if(d.getDeathMessage().contains("Guardian"))	
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " a voulu faire un bisous à un guardien...");
-			return;}
+			return;
+		}
 		if (d.getDeathMessage().contains("fell"))
 		{
 			d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " s'est cassé la margoulette ... ");
-			return;}
+			return;
+		}
 		else	
 		if(d.getDeathMessage().contains("died"))
 			{
 				d.setDeathMessage(ChatColor.GOLD + p.getName() + ChatColor.YELLOW + " est mort pitoyablement...");
-			return;}
+			return;
+			}
 		return;}
 	//finish event message with the new Death on the Wiki
 	
@@ -305,7 +347,6 @@ public class SayroListener implements Listener
 		Player p = e.getPlayer();
 		String message = e.getMessage();
 		String[] params = message.split(" ");
-		
 		if (params[0].equalsIgnoreCase("/heure"))
 		{
 			e.setCancelled(true);
@@ -321,23 +362,19 @@ public class SayroListener implements Listener
 					p.getWorld().setTime(0);
 					p.sendMessage(ChatColor.GREEN
 							+ "Il est l'heure de se lever !");
-
 				} 
 				else if (params[1].toLowerCase().startsWith("n"))
 				{
 					p.getWorld().setTime(14000);
 					p.sendMessage(ChatColor.GREEN + "Au dodo maintenant !");
-
 				} 
 				else
 				{
 					p.sendMessage(ChatColor.RED + "/heure <jour|nuit>");
-
 				}
 			} else
 			{
 				p.sendMessage(ChatColor.RED + "/heure <jour|nuit>");
-
 			}
 		}
 	}
